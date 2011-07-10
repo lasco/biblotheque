@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}info photo{% endblock %}
+{% block page-id %}ajout_lieux{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+        <ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+
+          </ul>
+        </li>
+
+</ul>
+    <h1>Voulez-vous supprimer cette photo ?</h1>
+    
+    <table>
+        <th>Photographes</th>
+        <th>Themes</th>
+        <th>Titre de la photo</th>
+        <th>date de prise de vue</th>
+        <th>Aperçu</th>
+
+            <tr>
+                <td>{{photo.photographe}}</td>
+                <td>{{photo.theme}}</td>
+                <td>{{photo.photo.title}}</td>
+                <td>{{photo.date}}</td>
+                <td><img  src="/static/{{photo.photo.thumbnail}}" alt="/static/{{b.photo}}" height="50" width="50"></td>
+  
+            </tr>
+    </table>
+    <h6 id = 'delete_page'>
+                 <a href = '{% url info_photo %}'>NON</a> 
+        <span>
+            <a class='prepend-3' href = '{% url deleting_photo photo.id %}'>OUI</a>
+        </span>
+    </h6>
+    
+{% endblock %}

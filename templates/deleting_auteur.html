@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}photographes{% endblock %}
+{% block page-id %}Add-invoice{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+          </ul>
+        </li>
+
+</ul>
+
+            <h1>Tous les photographes</h1>
+
+    
+    <table class="">
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>E-mail</th>
+                <tr>
+                    <td>{{auteur.nom}}</td>
+                    <td>{{auteur.prenom}}</td>
+                    <td>{{auteur.date1}}</td>
+                    <td>{{auteur.email}}</td>
+                </tr>
+    </table>
+        <h6 id = 'delete_page'>
+                 <a href = '{% url photographe %}'>NON</a> 
+        <span>
+            <a class='prepend-3' href = '{% url deleting_auteur auteur.id %}'>OUI</a>
+        </span>
+    </h6>
+
+
+
+{% endblock %}

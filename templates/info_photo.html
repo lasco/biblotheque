@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}info photo{% endblock %}
+{% block page-id %}ajout_lieux{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+        <ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+
+          </ul>
+        </li>
+
+</ul>
+    <h1>Informations sur les photos</h1>
+    
+    <span>{% include "_photo_pagination.html" %}</span>
+    
+    <table>
+        <th>Photographes</th>
+        <th>Themes</th>
+        <th>Titre de la photo</th>
+        <th>date de prise de vue</th>
+        <th>Aperçu</th>
+        <th>Modification</th>
+        <th>Suppresion</th>
+        {% for photo in page.object_list %}
+            <tr>
+                <td>{{photo.photographe}}</td>
+                <td>{{photo.theme}}</td>
+                <td>{{photo.photo.title}}</td>
+                <td>{{photo.date}}</td>
+                <td><img  src="/static/{{photo.photo.thumbnail}}" alt="/static/{{b.photo}}" height="50" width="50"></td>
+                <td><a href="{% url modif_photo photo.id %}">
+                            <img id = 'image' src="/static/css/images/Pencil3.png" width="50" height="50" title="{% for error in field.errors %}{{ error }}{% endfor %}" /></a>
+                        </td>
+                <td><a href= '{% url delete_confirm_photo photo.id %}'><img src="/static/css/images/Delete.png" width="50" height="50"></a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                    <td colspan="7">Pas de photographe et photo enregistrés</td>
+            </tr>
+        {% endfor %}
+        
+    </table>
+
+{% endblock %}

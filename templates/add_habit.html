@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Ajout d'habillement{% endblock %}
+{% block page-id %}ajout_lieux{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+
+          </ul>
+        </li>
+
+</ul>
+
+    <h1>Habillement</h1>
+    <p color='red'>{{error}}</p>
+    <fieldset>
+    <table>
+    <form  method="post">{% csrf_token %}
+    {% for field in form %}
+    
+        
+    <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+    </tr>
+            {% endfor %}
+    
+    </table>
+    
+    <ul id = "add_i_p">
+       <li ><input type="button" onclick ="Javascript:history.go(-1)"value="precedent" ></li>
+        <li><input type="reset" value="Reset" id="m_a_0"></li>
+        <li class="prepend"><input type='submit' value = "Suivant"/></li>
+    </ul>
+
+    </form>
+    </fieldset>
+<script type="text/javascript"> 
+ 
+$(document).ready(function() 
+{ 
+
+  //toggle the componenet with class msg_body 
+  $("#id_habillement_0").click(function() 
+  { 
+		$("#id_type_habillement_0").parent().hide(); 
+		$("#id_type_habillement_1").parent().hide(); 
+		$("#id_type_habillement_2").parent().hide();
+        $("#id_type_habillement_3").parent().hide();
+		$("#id_Vetement_0").parent().hide();
+		$("#id_Vetement_1").parent().hide();
+		$("#id_Vetement_2").parent().hide();
+		$("#id_Vetement_3").parent().hide();
+		$("#id_Vetement_4").parent().hide();
+		$("#id_Vetement_5").parent().hide();
+		$("#id_Vetement_6").parent().hide();
+		$("#id_Vetement_7").parent().hide();
+		$("#id_Vetement_8").parent().hide();
+		$("#id_Vetement_9").parent().hide();
+
+  }); 
+  $("#id_habillement_1").click(function() 
+  { 	
+		$("#id_type_habillement_0").parent().show(); 
+		$("#id_type_habillement_1").parent().show(); 
+		$("#id_type_habillement_2").parent().show();
+		$("#id_type_habillement_3").parent().show();
+		$("#id_Vetement_0").parent().show();
+		$("#id_Vetement_1").parent().show();
+		$("#id_Vetement_2").parent().show();
+		$("#id_Vetement_3").parent().show();
+		$("#id_Vetement_4").parent().show();
+		$("#id_Vetement_5").parent().show();
+		$("#id_Vetement_6").parent().show();
+		$("#id_Vetement_7").parent().show();
+		$("#id_Vetement_8").parent().show();
+		$("#id_Vetement_9").parent().show();
+
+			}); 
+  $("#m_a_0").click(function() 
+  { 	
+		$("#id_type_habillement_0").parent().show(); 
+		$("#id_type_habillement_1").parent().show(); 
+		$("#id_type_habillement_2").parent().show();
+		$("#id_Vetement_0").parent().show();
+		$("#id_Vetement_1").parent().show();
+		$("#id_Vetement_2").parent().show();
+		$("#id_Vetement_3").parent().show();
+
+			}); 
+}); 
+</script> 
+     {% endblock %}

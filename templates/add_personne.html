@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Ajout de personne{% endblock %}
+{% block page-id %}ajout_lieux{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}" Type="button">ajouter une photo</a>
+                        </li>     
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+
+          </ul>
+        </li>
+
+</ul>
+
+    <h1>Personne sur la photo</h1>
+    
+    <p color='red'>{{error}}</p>
+    <fieldset>
+    <table>
+    <form  method="post">{% csrf_token %}
+    {% for field in form %}
+    
+        
+    <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+    </tr>
+            {% endfor %}
+    
+    </table>
+            <ul id = "add_i_p">
+                <li ><input type="button" onclick ="Javascript:history.go(-1)"value="precedent" ></li>
+                <li><input type="reset" value="Reset"></li>
+                <li><input type='submit' value = "Suivant"/></li>
+            </ul>
+    </form>
+    </fieldset>
+     {% endblock %}

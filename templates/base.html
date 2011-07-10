@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
+
+<head>
+        <title>{% block title %}{% endblock %}</title>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        {% block prepend-stylesheet %}{% endblock %}
+        <!--[if IE]>
+            <link type="text/css" rel="stylesheet" href="/static/css/styles-ie.css" />
+            <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" />
+        <![endif]-->
+
+         <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css"
+        media="screen ,projection" />
+        <link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css"
+            media="print" />
+<!--
+        pour la date
+-->
+            <script src="/static/js/jquery-ui.min.js"></script>
+            <script src="/static/js/jquery.validate.js"></script>
+
+            <link rel="stylesheet" href="/static/css/jquery-ui.css" type="text/css" />
+            <link rel="stylesheet" href="/static/css/jquery.ui.theme.css" type="text/css" />
+
+            <link rel="stylesheet" href="/static/css/yoxview.css" type="text/css" media="screen" />
+            <script type="text/javascript" src="/static/js/yoxview-init.js"></script>
+            <link href="/static/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+            <link rel="stylesheet" href="/static/css/nivo-slider.css" type="text/css" media="screen" />
+            <script src="/static/js/jquery-ui.min.js"></script>
+            <script type="text/javascript">
+                        sfHover = function() {
+                                            var sfEls = document.getElementById("menu").getElementsByTagName("LI");
+                                            for (var i=0; i<sfEls.length; i++) {
+                                            sfEls[i].onmouseover=function() {
+                                            this.className+=" sfhover";
+                                            }
+                                sfEls[i].onmouseout=function() {
+                                this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+                                            }
+                                                }
+                                                    }
+                                        if (window.attachEvent) window.attachEvent("onload", sfHover);
+            </script>
+            <script language="javascript">
+					largeur= screen.width;
+					if (largeur==1024) {
+								document.write('<link href="style_1024.css" rel="stylesheet" type="text/css" />');
+										} 
+								else {
+								document.write('<link href="/static/css/style.css" rel="stylesheet" type="text/css" />');
+									 }
+</script>
+
+
+         {% block append-stylesheet %}{% endblock %}
+    
+</head>
+
+    <body>
+
+        <div id="{% block page-id %}{% endblock %}" class="container">
+            {% block menu %}{% endblock %}
+   <div id="effet">         
+		Mali Archive Photo
+	</div>
+
+<script>
+$(document).ready(function(){
+  $( "#effet" ).animate({ width: "90%" }, 1000 )
+     .animate({ fontSize: "24px" }, 1000 )
+     .animate({ borderLeftWidth: "15px" }, 1000 );
+});
+</script>
+<script>
+$(document).ready(function(){
+  $( "#effet1" ).animate({ width: "90%" }, 1000 )
+     .animate({ fontSize: "24px" }, 1000 )
+     .animate({ borderLeftWidth: "15px" }, 1000 );
+});
+</script>
+            {% block content %}{% endblock %}
+        </div>
+
+        <script type="text/javascript" src="/static/js/behavior.js"></script>
+
+    </body>
+
+</html>

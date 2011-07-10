@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}photographes{% endblock %}
+{% block page-id %}Add-invoice{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+          </ul>
+        </li>
+
+</ul>
+  
+            <h1>Recherche d'un photographe</h1>
+
+          <form action="{% url auteur %}" method="GET">
+                <label for="q">Mots clé: </label>
+                <input type="text" name="q" value="{{ query|escape }}">
+                <input type="submit" value="Recherche">
+          </form>
+        {% if query %}
+            <h2>Resultat de la recherche "{{ query|escape }}":</h2>
+                {% if resultat %}
+                  <ul>
+                  {% for photo in resultat %}
+                        <li><img src ='/static/{{photo.thumbnail}}'></li>
+                        
+                  {% endfor %}
+                  </ul>
+                {% else %}
+                  <p>pas de photo</p>
+                {% endif %}
+          {% endif %}
+
+ {% endblock %}

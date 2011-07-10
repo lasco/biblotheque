@@ -1,0 +1,332 @@
+body {
+      
+	margin-left: auto;
+	margin-right: auto;
+	background: #FFFFFF url(images/img01.jpg) repeat-x left top;
+	font-family: Arial, Helvetica, sans-serif;
+/*
+	font-size: 14px;
+*/
+
+}
+
+
+
+#logo p {
+	padding:10px;
+}
+
+
+/*============================*/
+/*=== Custom Slider Styles ===*/
+/*============================*/
+
+#slider-wrapper {
+    width:998px;
+    height:392px;
+    margin:0 auto;
+    margin-bottom:50px;
+}
+
+#slider {
+	position:relative;
+    width:500px;
+    height:246px;
+    margin-left:220px;
+	background:url(images/loading.gif) no-repeat 50% 50%;
+}
+#slider img {
+	position:absolute;
+	top:0px;
+	left:10px;
+	display:none;
+}
+#slider a {
+	border:0;
+	display:block;
+}
+
+.nivo-controlNav {
+	position:absolute;
+	left:200px;
+	bottom:-42px;
+}
+.nivo-controlNav a {
+	display:block;
+	width:22px;
+	height:22px;
+	background:url(images/bullets.png) no-repeat;
+	text-indent:-9999px;
+	border:0;
+	margin-right:3px;
+	float:left;
+}
+.nivo-controlNav a.active {
+	background-position:0px -22px;
+}
+
+.nivo-directionNav a {
+	display:block;
+	width:30px;
+	height:30px;
+	background:url(images/arrows.png) no-repeat;
+	text-indent:-9999px;
+	border:0;
+}
+a.nivo-nextNav {
+	background-position:-30px 0;
+	right:15px;
+}
+a.nivo-prevNav {
+	left:15px;
+}
+
+.nivo-caption {
+    text-shadow:none;
+    font-family: Helvetica, Arial, sans-serif;
+}
+.nivo-caption a { 
+    color:#efe9d1;
+    text-decoration:underline;
+}
+
+/*====================*/
+/*=== Other Styles ===*/
+/*====================*/
+.clear {
+	clear:both;
+}
+
+/*
+ css du menu 
+*/
+
+
+h1  {
+        font-family:Verdana, Arial, Helvetica, sans-serif;
+        font-size:20px;
+        text-align:center;
+        padding-top:2em;
+        
+	}
+#page_id h1{
+padding-bottom:2em;
+}
+/* menu */
+
+#menu, #menu ul /* Liste */     
+{
+	padding : 0; /* pas de marge intérieure */
+	margin : 0; /* ni extérieure */
+	list-style : none; /* on supprime le style par défaut de la liste */
+	line-height : 21px; /* on définit une hauteur pour chaque élément */
+	text-align : center; /* on centre le texte qui se trouve dans la liste */
+	background-image: none;
+	background-attachment: scroll;
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+
+#menu /* Ensemble du menu */
+{
+        font-weight : bold; /* on met le texte en gras */
+        font-family : Arial; /* on utilise Arial, c'est plus beau ^^ */
+        margin-bottom:40px;
+        font-size : 12px; /*hauteur du texte : 12 pixels */
+        margin-top:5.5em;
+        margin-left:0px;
+}
+
+#menu a /* Contenu des listes */
+{
+	display : block; /* on change le type d'élément, les liens deviennent des balises de type block */
+	padding : 0; /* couleur de fond */
+	color : #fff; /* couleur du texte */
+	text-decoration : none; /* on supprime le style par défaut des liens (la plupart du temps = souligné) */
+	width : 144px; /* largeur */
+	background-color: #000;
+}
+
+#menu li /* Elements des listes */      
+{ 
+        float : left; 
+        /* pour IE qui ne reconnaît pas "transparent" */
+        border-right : 1px solid #fff; /* on met une bordure blanche à droite de chaque élément */
+}
+
+/* IE ne reconnaissant pas le sélecteur ">" */
+html>body #menu li
+{
+        border-right: 1px solid transparent ; /* on met une bordure transparente à droite de chaque élément */
+}
+
+#menu li ul /* Sous-listes */
+{ 
+        position: absolute; /* Position absolue */
+        width: 144px; /* Largeur des sous-listes */
+        left: -999em; /* Hop, on envoie loin du champ de vision */
+}
+
+
+#menu li ul li /* Éléments de sous-listes */
+{
+        /* pour IE qui ne reconnaît pas "transparent" (comme précédemment) */
+        border-top : 1px solid #fff; /* on met une bordure blanche en haut de chaque élément d'une sous liste */
+}
+
+/* IE ne reconnaissant pas le sélecteur ">" */
+html>body #menu li ul li                
+{
+        border-top : 1px solid transparent; /* on met une bordure transparente en haut de chaque élément */
+}
+
+#menu li ul ul 
+{
+        margin    : -22px 0 0 144px ; /* On décale les sous-sous-listes pour qu'elles ne soient pas au dessus des sous-listes */ 
+        /* pour IE qui ne reconnaît pas "transparent" (comme précédemment) */
+        border-left     : 1px solid #fff ; /* Petite bordure à gauche pour ne pas coller ... */      
+}
+
+/* IE ne reconnaissant pas le sélecteur ">" ... je me répète ;-) */
+html>body #menu li ul ul                
+{
+        border-left     : 1px solid transparent ; /* on met une bordure transparente sur la gauche de chaque élément */
+}
+#menu a:hover /* Lorsque la souris passe sur un des liens */    
+{
+	color: #CDCDB0; /* ... et au contraire, le fond en blanc */
+	background-color: #FFF;
+}
+#menu li:hover ul ul, #menu li.sfhover ul ul /* Sous-sous-listes lorsque la souris passe sur un élément de liste */
+{
+        left: -999em; /* On expédie les sous-sous-listes hors du champ de vision */
+}
+
+#menu li:hover ul, #menu li li:hover ul, #menu li.sfhover ul, #menu li li.sfhover ul  /* Sous-listes lorsque la souris passe sur un élément de liste ET sous-sous-lites lorsque la souris passe sur un élément de sous-liste */
+{
+        left: auto; /* Repositionnement normal */
+        min-height: 0; /* Corrige un bug sous IE */
+}
+
+/*
+ fin css menu
+ */
+/*
+    menu index
+*/
+    /*Ici, vous pouvez jouer sur la largeur du menu*/
+.buttonmenu{
+list-style-type: none;
+margin: 0;
+padding: 0;
+width: 180px;
+}
+
+/*définition des liens*/
+.buttonmenu li a{
+color: white;
+display: block;
+width: 100%;
+padding: 2px 4px;
+text-decoration: none;
+font-weight: bold;
+border: 1px solid;
+/*Couleur des bords clair foncé foncé clair*/
+border-color:#D5BFD0 #5A3A54 #5A3A54 #D5BFD0;
+background-color: #018AFE;
+text-decoration:none;
+}
+
+.buttonmenu li a:visited{
+color: white;
+}
+
+/*Ici, c'est pour le survol des liens*/
+.buttonmenu li a:hover, .buttonmenu li a:active{
+color: black;
+background-color: #CDB4C8;
+}
+
+/*
+    fin menu index
+*/
+/*
+ pagination
+ */
+ 
+ul li {
+list-style-type :none;
+display:inline;
+}
+
+#add_autor label , #add_photo label {
+display:block;
+width:200px;
+float:left;
+}
+
+li {
+list-style-type:none;
+}
+.errorlist {
+color:red;
+ margin-left: 160px;
+}
+textarea {
+height: 20%;
+}
+
+
+
+
+
+table /* Le tableau en lui-même */
+{margin: auto;}
+
+
+th /* Les cellules d'en-tête */
+{
+text-align:center;
+background-color:#80B7F1;
+color: white;
+font-size: 1.1em;
+font-family: Arial, "Arial Black", Times, "Times New Roman", serif;
+
+}
+
+td /* Les cellules normales */
+{
+border: 1px solid black;
+font-family: "Comic Sans MS", "Trebuchet MS", Times, "Times New
+Roman", serif;
+text-align:center; /* Tous les textes des cellules seront centrés*/
+padding: 5px; /* Petite marge intérieure aux cellules pour éviter que
+le texte touche les bordures */
+}
+tr td {text-align:center;}
+
+
+
+
+#add_i_p ,#image_p  p {
+margin:1em;
+margin-left: 400px;
+}
+
+#image_p  p {
+margin:1em;
+margin-left: 240px;
+}
+
+#effet {
+  width:200px;
+  height:1.1em;
+  text-align:center;
+  margin:3px;
+  font-size:10px;
+  color : #2400FF;
+}
+#delete_page {
+margin :2em;
+margin-left :350px;
+}

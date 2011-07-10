@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}ajout de photo{% endblock %}
+{% block page-id %}add_photo{% endblock %}
+{% block content %}
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+          </ul>
+        </li>
+
+</ul>
+
+    <h1>Modification </h1>
+    
+    <div id="image_p">
+        <fieldset>
+            <form enctype="multipart/form-data"  method="post">{% csrf_token %}
+
+                        {{form.as_ul}}
+
+                        <p><input type='submit' value = "Enregistrer"/></p>
+
+
+            </form>
+        </fieldset>
+    </div>
+
+     {% endblock %}

@@ -1,0 +1,16 @@
+*~*
+*pyc
+*env/*
+*build/*
+geany_run_script.bat
+*.sqlite
+*.orig
+*private/*
+update_prod.sh
+django_wsgi.py
+nohup.out
+*.swp
+*.tif
+*.jpg
+*.JPG
+*.JPG.JPEG

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}ajout de photo{% endblock %}
+{% block page-id %}add_photo{% endblock %}
+{% block content %}
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+          </ul>
+        </li>
+
+</ul>
+    
+    
+
+    <h1>Ajout d'une photo</h1>
+    
+
+    <form enctype="multipart/form-data"  method="post">{% csrf_token %}
+
+                {{form.as_ul}}
+ 
+              <p class='prepend-8'> 
+            <input type="button" onclick ="Javascript:history.go(-1)"value="précédent" >
+            <input type='submit' value = "Enregistrer"/>
+    </form>
+
+<script type="text/javascript"> 
+ 
+$(document).ready(function() 
+{ 
+
+  //toggle the componenet with class msg_body 
+  $("#id_cadre_0").ready(function() 
+  { 
+		$("#id_personne").parent().hide(); 
+		$("#id_action").parent().hide(); 
+		$("#id_habillement").parent().hide();
+        $("#id_objet").parent().hide(); 
+        $("#id_lieux").parent().hide();
+        $("#id_photo").parent().hide();
+
+  }); 
+
+
+}); 
+</script> 
+     {% endblock %}

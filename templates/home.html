@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block page-id %}Add-invoice{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+
+          </ul>
+        </li>
+
+</ul>
+
+</div>
+
+<h1 align="center">Accueil</h1> 
+<div class="yoxview">  
+    <div id="wrapper">  
+        <div id="slider-wrapper">
+            <div id="slider" class="nivoSlider">    
+		{% for b in a %}
+<a href="/static/{{b.photo.thumbnail}}" target="_blank" border="3" align="center" > 
+<img class="prepend-5" src="/static/{{b.photo.thumbnail}}" alt="/static/{{b.photo.thumbnail}}" height="350" width="350" title="{{b.photo.title}}" />
+</a>
+        {% empty %}
+        <h1>pas de photo enregistrée</h1>
+        
+        {% endfor %}
+            </div>
+           
+        </div>
+    </div>  
+</div>                  
+    <script type="text/javascript" src="static/js/jquery-1.4.3.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery.nivo.slider.pack.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+        $('#slider').nivoSlider();
+    });
+    </script> 
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Modification de photographe{% endblock %}
+{% block page-id %}add_autor{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+          </ul>
+        </li>
+
+</ul>
+
+            <h1>Modification de photographe</h1>
+            
+        <form method = 'post' action =''>{% csrf_token %}
+                               
+                            <span class='prepend-4' id="">{{form.as_ul}}</span>
+                            
+        <p class='prepend-6'><input type='submit' value = "Modifier"/></p>
+        
+                <script type="text/javascript">
+        
+                    $('#id_date1').datepicker({ dateFormat: 'yy-mm-dd' });
+            
+                </script>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}info photo{% endblock %}
+{% block page-id %}ajout_lieux{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+
+        <li>
+                <a href="{% url galerie %}">photos</a>
+        <ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+
+          </ul>
+        </li>
+
+</ul>
+
+                                <h1>Fiche Photo</h1>
+                
+        <fieldset>
+                
+                <p><img  src="/static/{{photo.photo.thumbnail}}" alt="/static/{{b.photo.thumbnail}}"  height="230" width="230" ></p>
+                    <div class= "span-4 last">
+                        <p>Titre : {{photo.photo.title}}</p>
+                        <p>Série : {{photo.photo.serie}}</p>
+                        <p>Format : {{photo.format}}</p>
+                        <p>Date  : {{photo.date}}</p>
+                        Lieu  : <ul>
+                            <li>{{photo.lieux.pays}} {{photo.lieux.ville}}</li>
+                            <li> {{photo.lieux.saison}}</li>
+                            </ul>
+                    </div>
+
+                    <table class="span-16 prepend-1">
+                            <tr>
+                                <td>Photographe</td>
+                                <td>{{photo.photographe}}</td>
+                            </tr>
+                            <tr>
+                                <td>Theme</td>
+                                <td>{{photo.theme}}</td>
+                            </tr>
+                            <tr>
+                                <td>Appareil utilisé</td>
+                                <td>{{photo.appareil}}</td>
+                            </tr>
+                            <tr>
+                                <td>Mode</td>
+                                <td>{{photo.mode}}</td>
+                            </tr>
+                            <tr>
+                                <td>Sens</td>
+                                <td>{{photo.sens}}</td></tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>{{photo.description}}</td>
+                            </tr>
+                            <tr>
+                                <td>Lieu</td>
+                                <td>{{photo.lieux}}</td>
+                            </tr>
+                            <tr>
+                                <td>Action</td>
+                                <td>{{photo.action}}</td>
+                            </tr>
+                            <tr>
+                                <td>Habillement</td>
+                                <td>{{photo.habillement}}</td>
+                            </tr>
+                            <tr>
+                                <td>Objet</td>
+                                <td>{{photo.objet}}</td>
+                            </tr>
+                            <tr>
+                                <td>Personne</td>
+                                <td>{{photo.personne}}</td>
+                            </tr>
+                            
+                    </table>
+
+        </fieldset>
+
+{% endblock %}

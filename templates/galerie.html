@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Photos{% endblock %}
+{% block page-id %}Add-invoice{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+          </ul>
+        </li>
+
+</ul>
+
+
+<h1>Toutes les photos</h1>
+
+<span>{% include "_photo_pagination.html" %}</span>
+
+<div class="yoxview span-23 prepend-2">
+        
+            {% for b  in page.object_list %}
+        
+		{% ifchanged %}
+					<h1>{{b.photographe}}</h1>
+		{% endifchanged %}
+
+					<a href="/static/{{ b.photo.thumbnail}}" target="_blank" align="center" > 
+					<img  src="/static/{{ b.photo.thumbnail}}" alt="{{ b.photo.thumbnail}}" height="130" width="130" title="{{b.title}} (par {{b.photographe}})"  />
+					</a>
+                    
+                    <a href= "{% url dashphoto b.id %}"><img src="/static/css/images/button_plus.gif"></a>
+           {% endfor %}  
+</div>      
+    <script type="text/javascript" src="static/js/jquery-1.4.3.min.js"></script>
+
+{% endblock %}

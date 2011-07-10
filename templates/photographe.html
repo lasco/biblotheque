@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}photographes{% endblock %}
+{% block page-id %}Add-invoice{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+          </ul>
+        </li>
+
+</ul>
+
+            <h1>Tous les photographes</h1>
+            
+    <span>{% include "_photo_pagination.html" %}</span>
+    
+    <table class="">
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de naissance</th>
+            <th>E-mail</th>
+            <th>Modification</th>
+            <th>Suppresion</th>
+            {% for autor in page.object_list|dictsort:'nom' %}
+                <tr>
+                    <td><a href='{% url infoauteur autor.id  %}'> {{autor.nom}} </a></td>
+                    <td>{{autor.prenom}}</td>
+                    <td>{{autor.date1}}</td>
+                    <td>{{autor.email}}</td>
+                    <td><a href="{% url modif_auteur autor.id %}">
+                            <img id = 'image' class ="{{valide}}" src="/static/css/images/Pencil3.png" width="50" height="50" title="{% for error in field.errors %}{{ error }}{% endfor %}" /></a>
+                        </td>
+                        <td><a href= '{% url delete_confirm_auteur autor.id %}'><img src="/static/css/images/Delete.png" width="50" height="50"></a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">Pas de photographe enregistré</td>
+                </tr>
+            {% endfor %}
+    </table>
+
+
+
+{% endblock %}

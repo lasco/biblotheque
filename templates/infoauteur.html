@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %} info photographes{% endblock %}
+{% block page-id %}Add-invoice{% endblock %}
+{% block content %}
+
+<ul id="menu">
+<li>
+                <a href="{% url home %}">accueil</a>
+</li>
+        
+        <li class="menu2">
+          <a href="{% url photographe %}">Photographes</a>
+                <ul>
+      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                </ul>
+        </li>
+        
+        <li>
+                <a href="{% url galerie %}">photos</a>
+<ul>
+                        <li>
+                                <a href="{% url ajout_lieux %}">ajouter une photo</a>
+                        </li>
+                        <li>
+                            <a href="{% url info_photo %}">Modifier une photo</a>
+                        </li>
+          </ul>
+        </li>
+
+</ul>
+        {% for auteur in autor %}
+            <h1>Informations sur {{auteur.nom}} {{auteur.prenom}}</h1>
+        <table>
+            
+            <tr>
+                <td>Nationalité</td>
+                <td>{{auteur.nationalite}}</td>
+            </tr>
+            <tr>
+                <td>Adresse</td>
+                <td>{{auteur.adresse}}</td>
+            </tr>
+            <tr>
+                <td>Experience</td>
+                <td>{{auteur.experience}}</td>
+            </tr>
+        </table>
+        {% endfor %}
+
+{% endblock %}
