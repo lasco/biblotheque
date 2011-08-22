@@ -22,7 +22,7 @@ class Auteur(models.Model):
     
     def __unicode__(self):
         return "%s %s" % (self.nom,self.prenom)
-
+        
 class Theme (models.Model):
     """
     Table theme
@@ -41,42 +41,23 @@ class Categorie (models.Model):
     def __unicode__(self):
         return '%s : %s' % (self.theme , self.categorie)
 
-class Personne (models.Model):
-    sexe = models.CharField(max_length =40 , blank = True,\
-                                choices = (('Homme','Homme'),
-                                           ('Femme','Femme')))
-    categorie_dage = models.CharField(max_length=20 ,blank = True,\
-                                verbose_name = u"categorie d\'âge",\
-                                choices = (('Enfant','Enfant'),
-                                            ('Adolescent','Adolescent'),
-                                            ('Adulte','Adulte'),
-                                    ( u'ersonne âgé',u'personne âgé')))
-    nombre_personne = models.CharField(max_length=15,blank = True,\
-                                verbose_name = u'nombre de personnes',\
-                                    choices = (('1','1'),
-                                      ('Entre 2 et 5','Entre 2 et 5'),
-                                      ('Entre 6 et 10','Entre 6 et 10'),
-                                    ('Entre 10 et 20','Entre 10 et 20'),
-                                    ('Plus de 20','Plus de 20')))
-    prise_de_vue = models.CharField(max_length=20,blank = True,\
-                                    verbose_name = u'prise de vue',\
-                                    choices = (('Entier','Entier'),
-                                (u'plan americain',u'plan américain'),
-                                ('Portrait','Portrait'),
-                                ('gros plan','gros plan')))
-    pose = models.CharField (max_length=15, blank = True,\
-                            choices=(('de face','de face'),
-                            ('de profil','de profil'),
-                            ('de dos','de dos'),
-                            ('de trois quart','de trois quart')))
-    position = models.CharField (max_length=15, blank = True, \
-                                  choices=(('debout','débout'),
-                                         ('Assis','Assis'),
-                                         ('couche',u'couché')))
-    def __unicode__(self):
+class Categorie_personne(models.Model):
 
-        return '%s-%s-%s ' %(self.sexe ,self.pose,self.position) 
-                                        
+    az = models.CharField(max_length = 50 , verbose_name = "type")
+    name = models.CharField(max_length= 50 ) 
+
+    def __unicode__(self):
+        return "%s" % self.name
+
+class Personne (models.Model):
+    sexe = models.ManyToManyField(Categorie_personne ,blank = True , related_name = 'sexe' )
+    categorie_dage = models.ManyToManyField(Categorie_personne ,blank = True , related_name = 'categorie_dage' )
+    nombre_personne = models.ManyToManyField(Categorie_personne ,blank = True , related_name = 'nombre_personne' )
+    prise_de_vue = models.ManyToManyField(Categorie_personne ,blank = True , related_name = 'prise_de_vue' )
+    pose = models.ManyToManyField(Categorie_personne ,blank = True , related_name = 'pose' )
+    position = models.ManyToManyField(Categorie_personne ,blank = True , related_name = 'position' )
+
+
 class Lieux(models.Model):
 
     cadre = models.CharField (max_length=15, blank=True,\
@@ -128,100 +109,35 @@ class Action (models.Model):
     def __unicode__(self):
         return '%s-%s-%s' %(self.action_personnage , self.type_pose, self.Cadre_action)
 
-class Objet (models.Model):
-    objet_naturel = models.CharField (max_length = 15 , blank = True,
-                                      verbose_name = 'objet naturel',\
-                                      choices = (('animal','animal'),
-                                                 ('vegetal','vegetal')))
-    objet_fabrique = models.CharField(max_length = 15 , blank = True,\
-                                    verbose_name = 'objet fabrique',\
-                                choices=(('Manufacturé','Manufacturé'),
-                                        ('industriel','industriel')))
-    objet_domestique = models.CharField(max_length = 40 , blank = True,\
-                                      verbose_name='objet domestique',\
-              choices=(
-                        ('ustensile de cuisine','ustensile de cuisine'),
-                        ('entretien du corps' , 'entretien du corps'),
-                        ('mobilier' , 'mobilier'),
-                        ('luminaire','luminaire'),
-                        ('menage' , 'menage'),
-                        ('bibelot' , 'bibelot'),
-                        ('Appareil électrique ou électronique','Appareil électrique ou électronique'),
-                        ('Outil de communication','Outil de communication')))
-    objet_travail = models.CharField (max_length=10 ,blank= True , \
-                                    verbose_name = 'objet de travail',\
-                                    choices = (('outil','outil'),
-                                                ('Machine','Machine')))
-    vehicule = models.CharField ( max_length=20 , blank=True ,\
-                                    verbose_name = 'Véhicule' ,\
-                                    choices = (('Vélo','Vélo'),
-                                              ('Moto, mobylette','Moto, mobylette'),
-                                              ('Voiture','Voiture'),
-                                              ('Camion','Camion'),
-                                              ('Bus','Bus')))
-    objet_loisir = models.CharField ( max_length = 30 , blank = True,\
-                                verbose_name='objet de loisir',\
-                                choices=(('Jeu  jouet','Jeu jouet'),
-                                          ('equipement sportif','equipement sportif'),
-                                          ('instrument de musique','instrument de musique')))
-    objet_decoratif = models.CharField ( max_length = 15 , blank=True ,\
-                                        verbose_name  = 'objet décoratif',\
-                                        choices = (('Objet d’art','Objet d’art '),
-                                                    ('Objet artisanal','Objet artisanal')))
-
+class Categorie_objet(models.Model):
+    type_objet =  models.CharField(max_length = 50 )
+    name =  models.CharField(max_length = 50 )
     def __unicode__(self):
-        return '%s-%s-%s-%s-%s-%s-%s'%(self.objet_naturel,self.objet_fabrique,self.objet_domestique,self.objet_travail,self.vehicule,self.objet_loisir,self.objet_decoratif)
+        return "%s" % self.name
+
+class Objet (models.Model):
+    objet_naturel =  models.ManyToManyField(Categorie_objet ,blank = True , related_name = 'objet_naturel' )
+    objet_fabrique = models.ManyToManyField(Categorie_objet ,blank = True , related_name = 'objet_fabrique' )
+    objet_domestique = models.ManyToManyField(Categorie_objet ,blank = True , related_name = 'objet_domestique' )
+    objet_travail = models.ManyToManyField(Categorie_objet ,blank = True , related_name = 'objet_travail' )
+    vehicule = models.ManyToManyField(Categorie_objet ,blank = True , related_name = 'vehicule' )
+    objet_loisir =  models.ManyToManyField(Categorie_objet ,blank = True , related_name = 'objet_loisir' )
+    objet_decoratif =  models.ManyToManyField(Categorie_objet ,blank = True , related_name = 'objet_decoratif' )
+
+
+class Categorie_habit(models.Model):
+    type_habit = models.CharField(max_length = 50 )
+    name =     models.CharField(max_length = 50 )
+    def __unicode__(self):
+        return "%s" % self.name
 
 class Habillement_bijoux (models.Model):
-    habillement = models.CharField(max_length=8 , blank = True,\
-                                    choices =(('nu','nu'),
-                                              ('habille','habille')))
-    type_habillement = models.CharField(max_length=20, blank = True,\
-                                verbose_name = "type d\'habillement",\
-                                choices = (('traditionnel','Traditionnel'),
-                                        ('moderne','moderne'),
-                            ('tenue de mariage','tenue de mariage'),
-                            ('tenue de fête','tenue de fête')))
-    Vetement  = models.CharField (max_length= 25 , blank = True, \
-                                    verbose_name ='vêtement',\
-                                            choices=(('boubou','boubou'),
-                                                ('complet','complet'),
-                                                ('robe','robe'),
-                                                ('jupe','jupe'),
-                                                ('pantalon','pantalon'),
-                                                ('tunique','tunique'),
-                                                ('chemise','chemise'),
-                                                ('haut à manches courtes','haut à manches courtes'),
-                                                ('haut à manches longues','haut à manches longues'),
-                                                ('haut sans manches','haut sans manches')))
-    chaussures = models.CharField(max_length = 25 , blank = True ,\
-                                    choices =(('Pieds nus','Pieds nus'),
-                                               ('sandales','sandales'),
-                                               ('ballerines','ballerines'),
-                                               ('chaussures fermées','chaussures fermées'),
-                                               ('escarpins','escarpins'),
-                                               ('chaussures à talons','chaussures à talons'),
-                                               ('mules, tongs','mules, tongs'),
-                                               ('bottes','bottes'),
-                                               ('baskets, tennis','baskets, tennis')))
-    bijoux  = models.CharField (max_length =20 , blank = True, \
-                                    choices=(('Collier','Collier'),
-                                             ('boucles d oreilles',"boucles d\'oreilles"),
-                                             ('bracelet','bracelet'),
-                                             ('tour de cheville','tour de cheville'),
-                                             ('sautoir','sautoir'),
-                                             ('montre','montre'),
-                                             ('bague','bague')))
-    coiffe = models.CharField (max_length = 20 ,blank = True , \
-                                    choices = (('chapeau ','chapeau '),
-                                               ('casquette','casquette'),
-                                               ('béret','béret'),
-                                               ('foulard','foulard'),
-                                               ('autre coiffe','autre coiffe')))
-    def __unicode__(self):
-        
-        return "%s-%s-%s-%s-%s-%s" %(self.habillement,self.type_habillement,self.Vetement,self.chaussures,self.bijoux,self.coiffe)
-
+    habillement = models.ManyToManyField(Categorie_habit ,blank = True , related_name = 'habillement' )
+    type_habillement = models.ManyToManyField(Categorie_habit ,blank = True , related_name = 'type_habillement' )
+    Vetement  = models.ManyToManyField(Categorie_habit ,blank = True , related_name = 'Vetement' )
+    chaussures = models.ManyToManyField(Categorie_habit ,blank = True , related_name = 'chaussures' )
+    bijoux  = models.ManyToManyField(Categorie_habit ,blank = True , related_name = 'bijoux' )
+    coiffe =  models.ManyToManyField(Categorie_habit ,blank = True , related_name = 'coiffe' )
 
 
 class Image_p (models.Model):
@@ -278,10 +194,10 @@ class Photo(models.Model):
     mode = models.CharField(max_length =10 , choices=(('N/B','N/B'),
                                                       ('Couleur','Couleur')))
     date = models.CharField (max_length=10,verbose_name='date de prise de vue')
-    type_p=models.CharField(max_length=10,
+    type_p =  models.CharField(max_length=10,
                                 verbose_name="Type de prise de vue",
-                            choices=(('A','Argentique'),
-                                     ('N','Numerique')))
+                            choices=(('A','argentique'),
+                                     ('N','numerique')))
     personne = models.ForeignKey(Personne)
     action = models.ForeignKey(Action)
     habillement = models.ForeignKey(Habillement_bijoux)
@@ -290,12 +206,13 @@ class Photo(models.Model):
     lieux = models.ForeignKey(Lieux)
     appareil = models.CharField(max_length=20,blank=True ,\
                                 verbose_name=u"Appareil utilise")
-    sens = models.CharField(max_length=20,choices=(('Horizontale','Horizontale'),
-                                                    ('Horizontale','Verticale'),
-                                                    ('Carree','Carree')))
+    sens = models.CharField(max_length=20,choices=(('horizontale','horizontale'),
+                                                    ('verticale','verticale'),
+                                                    ('carree','carree')))
     description = models.TextField(max_length=70,blank=True)
     def __unicode__(self):
         return "% s  %s " % (self.photographe , self.theme)
+
 
 admin.site.register(Auteur)
 admin.site.register(Theme)
@@ -303,7 +220,10 @@ admin.site.register(Categorie)
 admin.site.register(Lieux)
 admin.site.register(Photo)
 admin.site.register(Image_p)
+admin.site.register(Categorie_personne)
 admin.site.register(Personne)
 admin.site.register(Action)
+admin.site.register(Categorie_objet)
 admin.site.register(Objet)
+admin.site.register(Categorie_habit)
 admin.site.register(Habillement_bijoux)

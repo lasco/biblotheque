@@ -61,10 +61,23 @@
     
     </table>
             <ul id = "add_i_p">
-                <li ><input type="button" onclick ="Javascript:history.go(-1)"value="precedent" ></li>
                 <li><input type="reset" value="Reset"></li>
-                <li><input type='submit' value = "Suivant"/></li>
+                <li><input type='submit' value = "rechercher"/></li>
             </ul>
     </form>
     </fieldset>
+
+                        {% if response %}
+                    <ul>
+                    {% for photo in response %}
+                  
+                        <li><img src ='/static/{{ photo.photo.thumbnail }}'  height="200" width="200" ></li>
+                        <li><a href= "{% url dashphoto photo.id %}"><img src="/static/css/images/button_plus.gif"></a></li>
+                        <li><a href ="{% url modif_photo photo.id %} "><img id = 'image' src="/static/css/images/Pencil3.png" width="" height="50" title="{% for error in field.errors %}{{ error }}{% endfor %}" /></a></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                <p>pas de photo </p>
+
      {% endblock %}

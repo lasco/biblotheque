@@ -96,11 +96,11 @@ def add_photo(request, *args, **kwargs):
     objet = Objet.objects.get(id= obj)
     habillement = Habillement_bijoux.objects.get(id = hab)
     image = Image_p.objects.get(id = img )
+    form = PhotoForm()
     form = PhotoForm(initial={'lieux':lieu.id ,'personne':personne.id,\
                               'action':action.id,'objet':objet.id,\
                               'habillement':habillement.id ,\
                               'photo':image.id })
-
     c =({'form':form})
     #~ from ipdb import set_trace; set_trace()
     if request.method == 'POST':
@@ -110,7 +110,7 @@ def add_photo(request, *args, **kwargs):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('ajout_lieux'))
-        c.update({'form':form})
+    c.update({'form':form})
     c.update(csrf(request))
     return render_to_response('add_photo.html',c)
 
@@ -121,11 +121,6 @@ def delete_confirm_photo (request , *args, **kwargs):
     ctx = {'photo':photo}
     return render_to_response('delete_photo.html', ctx )
 
-#~ def deleting_confirm_2 (request , *args , **kwargs):
-    #~ photo_id = kwargs["num"]
-    #~ photo = Photo.objects.get(id = photo_id)
-    #~ return HttpResponseRedirect(reverse('deleting_photo',args =[photo_id]))
-
 def deleting_photo (request , *args, **kwargs):
     photo_id = kwargs["num"]
     photo = Photo.objects.get(id = photo_id)
@@ -134,7 +129,7 @@ def deleting_photo (request , *args, **kwargs):
     for photo in photos :
         photo.save()
     return HttpResponseRedirect(reverse('info_photo'))
-    
+
 def add_image (request,*args, **kwargs):
     c = {}
     lie = kwargs["num"]
@@ -157,7 +152,6 @@ def add_image (request,*args, **kwargs):
         c.update({'form':form})
     c.update(csrf(request))
     return render_to_response ('add_image.html', c)
-
 
 def info_photo (request,*args, **kwargs):
     
@@ -189,9 +183,59 @@ def info_photo (request,*args, **kwargs):
 def dashphoto (request , *args, **kwargs):
     id_photo = kwargs["num"]
     photo = Photo.objects.get(id =id_photo )
-    ctx = {'photo':photo}
-    return render_to_response ('dashphoto.html', ctx )
+    
+    # formatage des index
+    #index personne
+    
+    index_pers = [persexe['name'] for persexe in photo.personne.sexe.values()]
+    index_pers2 =[percategorie_dage['name'] for percategorie_dage in photo.personne.categorie_dage.values()]
+    index_pers3 = [pernombre_personne['name'] for pernombre_personne in photo.personne.nombre_personne.values()]
+    index_pers4 = [perprise_de_vue['name'] for perprise_de_vue in photo.personne.prise_de_vue.values()]
+    index_pers5 = [perpose['name'] for perpose in photo.personne.pose.values()]
+    index_pers6 = [perposition['name'] for perposition in photo.personne.position.values()]
+    index_pers.extend(index_pers2)
+    index_pers.extend(index_pers3)
+    index_pers.extend(index_pers4)
+    index_pers.extend(index_pers5)
+    index_pers.extend(index_pers6)
+    
+    # index habilllement et bijoux
+    
+    index_habit =  [hab_habillement['name'] for hab_habillement in photo.habillement.habillement.values()]
+    index_habit2 = [hab_type_habillement['name'] for hab_type_habillement in photo.habillement.type_habillement.values()]
+    index_habit3 = [hab_Vetement['name'] for hab_Vetement in photo.habillement.Vetement.values()]
+    index_habit4 = [hab_chaussures['name'] for hab_chaussures in photo.habillement.chaussures.values()]
+    index_habit5 = [hab_bijoux['name'] for hab_bijoux in photo.habillement.bijoux.values()]
+    index_habit6 = [hab_coiffe['name'] for hab_coiffe in photo.habillement.coiffe.values()]
+    index_habit.extend(index_habit2)
+    index_habit.extend(index_habit3)
+    index_habit.extend(index_habit4)
+    index_habit.extend(index_habit5)
+    index_habit.extend(index_habit6)
+    
+    # index object 
+    
+    index_obj = [obj_objet_naturel['name'] for obj_objet_naturel in photo.objet.objet_naturel.values()]
+    index_obj2 = [obj_objet_fabrique['name'] for obj_objet_fabrique in photo.objet.objet_fabrique.values()]
+    index_obj3 = [obj_objet_domestique['name'] for obj_objet_domestique in photo.objet.objet_domestique.values()]
+    index_obj4 = [obj_objet_travail['name'] for obj_objet_travail in photo.objet.objet_travail.values()]
+    index_obj5 = [obj_vehicule['name'] for obj_vehicule in photo.objet.vehicule.values()]
+    index_obj6 = [obj_objet_loisir['name'] for obj_objet_loisir in photo.objet.objet_loisir.values()]
+    index_obj7 = [obj_objet_decoratif['name'] for obj_objet_decoratif in photo.objet.objet_decoratif.values()]
+    index_obj.extend(index_obj2)
+    index_obj.extend(index_obj3)
+    index_obj.extend(index_obj4)
+    index_obj.extend(index_obj5)
+    index_obj.extend(index_obj6)
+    index_obj.extend(index_obj7)
+    
 
+    
+    ctx = {'photo':photo , 'index_pers':index_pers,\
+                        'index_habit':index_habit,\
+                        'index_obj':index_obj ,\
+                        }
+    return render_to_response ('dashphoto.html', ctx )
 
 def modif_photo(request , *args, **kwargs):
     ph_id = int(kwargs["id"])
@@ -203,6 +247,8 @@ def modif_photo(request , *args, **kwargs):
     photo =  Photo.objects.get(id=ph_id)
     url_image = reverse ('modif_image', args = [photo.photo.id , photo.id])
     data = {}
+    # si l'id de l'image existe on remplace cet id par celle de la photo
+    # existante
     if img_id :
         image = Image_p.objects.get(id = img_id)
         data =  {
@@ -223,6 +269,7 @@ def modif_photo(request , *args, **kwargs):
                     'description': photo.description ,\
                 }
     else:
+                print photo.personne.id
                 data =  {
                     'photographe': photo.photographe.id ,\
                     'theme' : photo.theme.id ,\
@@ -234,33 +281,35 @@ def modif_photo(request , *args, **kwargs):
                     'action' : photo.action.id ,\
                     'photo' : photo.photo.id ,\
                     'habillement':photo.habillement.id ,\
-                    'objet' : photo.objet.id ,\
+                    'objet' :photo.objet.id  ,\
                     'lieux' : photo.lieux.id ,\
                     'appareil':photo.appareil ,\
                     'sens' : photo.sens ,\
                     'description': photo.description ,\
                 }
+                
     form = modif_photoform (data)
     context.update({'form':form ,'url_image':url_image})
     if request.method == 'POST':
         form = modif_photoform(request.POST,request.FILES)
-        photo.photographe_id = request.POST['photographe']
-        photo.theme_id =  request.POST['theme']
-        photo.format = request.POST['format']
-        photo.mode = request.POST['mode']
-        photo.date = request.POST['date']
-        photo.type_p = request.POST['type_p']
-        photo.photo_id = request.POST['photo']
-        photo.personne_id = request.POST['personne']
-        photo.action_id = request.POST['action']
-        photo.habillement_id = request.POST['habillement']
-        photo.objet_id = request.POST['habillement']
-        photo.lieux_id = request.POST['lieux']
-        photo.appareil = request.POST['appareil']
-        photo.sens = request.POST['sens']
-        photo.description = request.POST['description']
-        photo.save ()
-        return HttpResponseRedirect(reverse('info_photo'))
+        if form.is_valid():
+            photo.photographe_id = request.POST['photographe']
+            photo.theme_id =  request.POST['theme']
+            photo.format = request.POST['format']
+            photo.mode = request.POST['mode']
+            photo.date = request.POST['date']
+            photo.type_p = request.POST['type_p']
+            photo.photo_id = request.POST['photo']
+            photo.personne_id = request.POST['personne']
+            photo.action_id = request.POST['action']
+            photo.habillement_id = request.POST['habillement']
+            photo.objet_id = request.POST['objet']
+            photo.lieux_id = request.POST['lieux']
+            photo.appareil = request.POST['appareil']
+            photo.sens = request.POST['sens']
+            photo.description = request.POST['description']
+            photo.save ()
+            return HttpResponseRedirect(reverse('info_photo'))
     return render_to_response('modif_photo.html',context)
 
 def modif_image (request , *args, **kwargs):
@@ -284,18 +333,20 @@ def modif_image (request , *args, **kwargs):
             #~ from ipdb import set_trace; set_trace()
             return HttpResponseRedirect (reverse('modif_photo', args =[modif_id , id_img]))
     return render_to_response ('modif_image.html', context)
-    
-    
+
 def auteur (request):
     
     query = request.GET.get('q', '')
-    print query
     if query:
         qset = (
-            Q(title__icontains=query) |
+            Q(photo__title__icontains=query) |
             Q(photographe__nom__icontains=query) |
             Q(theme__categorie__icontains = query) |
-            Q(theme__theme__nom__icontains = query)
+            Q(theme__theme__nom__icontains = query) |
+            Q(mode__icontains = query) |
+            Q(sens__icontains = query) |
+            Q(date__icontains = query) |
+            Q(description__icontains = query)
         )
         
         resultat = Photo.objects.filter(qset).distinct()
@@ -329,13 +380,13 @@ def add_autor(request):
 
     c.update({'form':form})
     return render_to_response('add_autor.html', c )
-    
+
 def delete_confirm_auteur (request , *args, **kwargs):
     auteur_id = kwargs["num"]
     auteur  = Auteur.objects.get(id = auteur_id)
     ctx = {'auteur':auteur}
     return render_to_response('deleting_auteur.html', ctx)
-    
+
 def deleting_auteur (request , *args, **kwargs):
     auteur_id = kwargs["num"]
     auteur  = Auteur.objects.get(id = auteur_id)
@@ -378,7 +429,7 @@ def modif_auteur(request,*args, **kwargs):
     context.update(csrf(request))
     
     return render_to_response('modif_auteur.html', context)
-                
+
 def add_lieux(request):
     context = {}
     context.update(csrf(request))
@@ -420,33 +471,32 @@ def add_personne(request,*args, **kwargs):
     context.update({'form':form})
     personne = Personne()
     if request.method == 'POST':
-        personne.sexe = request.POST.get('sexe') or ''
-        personne.categorie_dage = request.POST.get('categorie_dage') or ''
-        personne.nombre_personne = request.POST.get('nombre_personne') or ''
-        personne.prise_de_vue = request.POST.get('prise_de_vue') or ''
-        personne.pose = request.POST.get('pose') or ''
-        personne.position = request.POST.get('position') or ''
-        doublon = Personne.objects.filter (  sexe = personne.sexe,\
-                                categorie_dage=personne.categorie_dage,\
-                                nombre_personne = personne.nombre_personne,\
-                                prise_de_vue = personne.prise_de_vue ,\
-                                pose = personne.pose ,\
-                                position = personne.position)
-        if not doublon:
-            personne.save()
-            return HttpResponseRedirect(
-                reverse('ajout_action',args =[int(id_) ,personne.id]
-                       )
+        form = PersonneForm (request.POST)
+        if form.is_valid():
+            persexe = request.POST.get('sexe')
+            percategorie_dage = request.POST.get('categorie_dage') 
+            pernombre_personne = request.POST.get('nombre_personne')
+            perprise_de_vue = request.POST.get('prise_de_vue')
+            perpose = request.POST.get('pose')
+            perposition = request.POST.get('position')
+            doublon = Personne.objects.filter (  sexe = persexe,\
+                                    categorie_dage=percategorie_dage,\
+                                    nombre_personne = pernombre_personne,\
+                                    prise_de_vue = perprise_de_vue ,\
+                                    pose = perpose ,\
+                                    position = perposition)
+            if not doublon:
+                
+                form.save()
+                return HttpResponseRedirect(reverse('ajout_action',args =[int(id_) ,form.instance.id]))
+            else:
+                a = doublon[0]
+                return HttpResponseRedirect(
+                                reverse('ajout_action', args = [id_ ,a.id])
                                         )
-        else:
-            a = doublon[0]
-            return HttpResponseRedirect(
-                            reverse('ajout_action', args = [id_ ,a.id])
-                                        )
-    url_lieu = reverse('ajout_lieux')
-    context.update({'form':form , 'url_lieu':url_lieu})
+    context.update({'form':form })
     return render_to_response('add_personne.html',context)
-    
+
 def add_action(request,*args, **kwargs):
     lie_id = kwargs ['lied']
     per_id = int(kwargs ['persid'])
@@ -477,7 +527,7 @@ def add_action(request,*args, **kwargs):
         
     context.update({'form':form})
     return render_to_response ('add_action.html',context)
-    
+
 def add_objet(request,*args, **kwargs):
     lie_id = kwargs ['lied']
     per_id = kwargs ['persid']
@@ -486,36 +536,38 @@ def add_objet(request,*args, **kwargs):
     context.update(csrf(request))
     form = ObjetForm ()
     context.update({'form':form})
-    objet = Objet()
     if request.method == 'POST':
-        objet.objet_naturel = request.POST.get('objet_naturel') or ''
-        objet.objet_fabrique = request.POST.get('objet_fabrique') or ''
-        objet.objet_domestique = request.POST.get('objet_domestique') or ''
-        objet.objet_travail = request.POST.get('objet_travail') or ''
-        objet.vehicule  = request.POST.get ('vehicule') or ''
-        objet.objet_loisir = request.POST.get('objet_loisir') or ''
-        objet.objet_decoratif = request.POST.get('objet_decoratif') or ''
-        doublon = Objet.objects.filter(objet_naturel=objet.objet_naturel,\
-                                    objet_fabrique=objet.objet_fabrique,\
-                                    objet_domestique=objet.objet_domestique,\
-                                    objet_travail = objet.objet_travail ,\
-                                    vehicule = objet.vehicule , \
-                                    objet_loisir=objet.objet_loisir, \
-                                    objet_decoratif = objet.objet_decoratif)
-        if not doublon:
-            objet.save()
-            return HttpResponseRedirect(reverse
-            ('ajout_habit',\
-             args=[int(lie_id) , int(per_id) , int(act_id) , objet.id]))
-        else:
-            a = doublon[0]
-            return HttpResponseRedirect (reverse
-            ('ajout_habit',\
-            args=[int(lie_id) , int(per_id) , int(act_id) ,a.id])
-                        )
+        form = ObjetForm (request.POST)
+        objet = Objet()
+        if form.is_valid():
+            obj_naturel = request.POST.get ('objet_naturel')
+            obj_fabrique = request.POST.get ('objet_fabrique')
+            obj_domestique = request.POST.get ('objet_domestique')
+            obj_travail = request.POST.get ('objet_travail')
+            vehicule  = request.POST.get ('vehicule')
+            obj_loisir = request.POST.get ('objet_loisir')
+            obj_decoratif = request.POST.get('objet_decoratif')
+            doublon = Objet.objects.filter(objet_naturel= obj_naturel,\
+                                    objet_fabrique= obj_fabrique ,\
+                                    objet_domestique = obj_domestique,\
+                                    objet_travail = obj_travail ,\
+                                    vehicule = vehicule , \
+                                    objet_loisir= obj_loisir, \
+                                    objet_decoratif = obj_decoratif)
+            if not doublon:
+                form.save()
+                return HttpResponseRedirect(reverse
+                            ('ajout_habit',\
+             args=[int(lie_id) , int(per_id) , int(act_id) ,form.instance.id]))
+            else:
+                a = doublon[0]
+                return HttpResponseRedirect (reverse
+                                ('ajout_habit',\
+                   args=[int(lie_id) , int(per_id) , int(act_id) ,a.id])
+                                            )
     context.update({'form':form})
     return render_to_response ('add_objet.html',context)
-                                    
+
 def add_habillement(request,*args, **kwargs):
     lie_id = kwargs ['lied']
     per_id = kwargs ['persid']
@@ -525,29 +577,155 @@ def add_habillement(request,*args, **kwargs):
     context.update(csrf(request))
     form = HabillementForm ()
     context.update({'form':form})
-    habit = Habillement_bijoux()
     if request.method == 'POST':
-        habit.habillement = request.POST.get('habillement') or ''
-        habit.type_habillement = request.POST.get('type_habillement') or ''
-        habit.Vetement = request.POST.get('Vetement') or ''
-        habit.chaussures = request.POST.get('chaussures') or ''
-        habit.bijoux = request.POST.get('bijoux') or ''
-        habit.coiffe = request.POST.get('coiffe') or ''
-        doublon= Habillement_bijoux.objects.filter(habillement=habit.habillement,\
-                                            type_habillement= habit.type_habillement,\
-                                            Vetement = habit.Vetement ,\
-                                            chaussures = habit.chaussures , \
-                                            bijoux = habit.bijoux ,\
-                                            coiffe = habit.coiffe)
-        if not doublon:
-            habit.save()
-            return HttpResponseRedirect(reverse
-            ('image',\
-             args=[int(lie_id) , int(per_id) , int(act_id) ,int(obj_id) , habit.id]))
-        else:
-            a = doublon[0]
-            return HttpResponseRedirect (reverse
-            ('image',\
-            args=[int(lie_id) , int(per_id) , int(act_id) ,int(obj_id), a.id]))
+        form = HabillementForm(request.POST)
+        if form.is_valid():
+            habillement = request.POST.get('habillement')
+            type_habillement = request.POST.get('type_habillement')
+            Vetement = request.POST.get('Vetement')
+            chaussures = request.POST.get('chaussures')
+            bijoux = request.POST.get('bijoux')
+            coiffe = request.POST.get('coiffe')
+            doublon= Habillement_bijoux.objects.filter(habillement=habillement,\
+                                            type_habillement= type_habillement,\
+                                            Vetement = Vetement ,\
+                                            chaussures = chaussures , \
+                                            bijoux = bijoux ,\
+                                            coiffe = coiffe)
+            if not doublon:
+                form.save()
+                return HttpResponseRedirect(reverse
+                    ('image',\
+             args=[int(lie_id) , int(per_id) , int(act_id) ,int(obj_id) , form.instance.id]))
+            else:
+                a = doublon[0]
+                return HttpResponseRedirect (reverse
+                        ('image',\
+                args=[int(lie_id) , int(per_id) , int(act_id) ,int(obj_id), a.id]))
     context.update({'form':form})
     return render_to_response ('add_habit.html',context)
+
+
+def search_lieu (request):
+    context = {}
+    context.update(csrf(request))
+    form = LieuxForm()
+    context.update({'form':form})
+    if request.method == 'POST':
+        cadre = request.POST.get('cadre') or ''
+        print cadre
+        saison = request.POST.get('saison') or ''
+        type_in = request.POST.get('type_in') or ''
+        type_ex = request.POST.get('type_ex') or ''
+        moment = request.POST.get('moment')  or ''
+        pays = request.POST.get('pays') or ''
+        ville  = request.POST.get('ville') or ''
+        response = Photo.objects.filter(lieux__cadre = cadre , \
+                                        lieux__saison = saison , \
+                                        lieux__type_in = type_in , \
+                                        lieux__type_ex = type_ex , \
+                                        lieux__moment = moment , \
+                                        lieux__pays = pays ,\
+                                        lieux__ville = ville )
+                                        
+        context.update( {'response':response} )
+    context.update(csrf(request))
+    return render_to_response ('search_lieu.html' , context )
+    
+def search_action (request):
+    context = {}
+    context.update(csrf(request))
+    form = ActionForm ()
+    context.update({'form':form})
+    if request.method == 'POST':
+        action_personnage = request.POST.get('action_personnage') or ''
+        print action_personnage
+        type_pose = request.POST.get('type_pose') or ''
+        Cadre_action = request.POST.get('Cadre_action') or ''
+        response = Photo.objects.filter (action__action_personnage = action_personnage , \
+                        action__type_pose = type_pose , \
+                        action__Cadre_action  = Cadre_action )
+        print response
+        context.update( {'response':response} )
+    context.update(csrf(request))
+    return render_to_response ( 'search_action.html', context )
+    
+def search_personne (request):
+    context = {}
+    context.update(csrf(request))
+    form = PersonneForm ()
+    context.update({'form':form})
+    if request.method == 'POST':
+        form = PersonneForm (request.POST)
+        if form.is_valid():
+            sexe = request.POST.get('sexe')
+            categorie_dage = request.POST.get('categorie_dage')
+            nombre_personne = request.POST.get('nombre_personne')
+            prise_de_vue = request.POST.get('prise_de_vue')
+            pose = request.POST.get('pose') 
+            position = request.POST.get('position')
+            response = Photo.objects.filter (personne__sexe = sexe ,\
+                                    personne__categorie_dage = categorie_dage,\
+                                    personne__nombre_personne = nombre_personne,\
+                                    personne__prise_de_vue = prise_de_vue ,\
+                                    personne__pose = pose ,\
+                                    personne__position = position)
+            print response
+            context.update( {'response':response} )
+        context.update(csrf(request))
+    
+    return render_to_response ('search_personne.html', context )
+
+def search_habit (request):
+    context = {}
+    context.update(csrf(request))
+    form = HabillementForm ()
+    context.update({'form':form})
+    if request.method == 'POST':
+        form = HabillementForm(request.POST)
+        if form.is_valid():
+            habillement = request.POST.get('habillement')
+            type_habillement = request.POST.get('type_habillement')
+            Vetement = request.POST.get('Vetement')
+            chaussures = request.POST.get('chaussures')
+            bijoux = request.POST.get('bijoux')
+            coiffe = request.POST.get('coiffe')
+            response = Photo.objects.filter(habillement__habillement = habillement,\
+                                            habillement__type_habillement = type_habillement,\
+                                            habillement__Vetement = Vetement ,\
+                                            habillement__chaussures = chaussures , \
+                                            habillement__bijoux = bijoux ,\
+                                            habillement__coiffe = coiffe)
+            print response
+            context.update( {'response':response} )
+        context.update(csrf(request))
+    return render_to_response ('search_habit.html' , context )
+
+def search_objet (request):
+    context = {}
+    context.update(csrf(request))
+    form = ObjetForm ()
+    context.update({'form':form})
+    if request.method == 'POST':
+        form = ObjetForm (request.POST)
+        objet = Objet()
+        if form.is_valid():
+            obj_naturel = request.POST.get ('objet_naturel')
+            obj_fabrique = request.POST.get ('objet_fabrique')
+            obj_domestique = request.POST.get ('objet_domestique')
+            obj_travail = request.POST.get ('objet_travail')
+            vehicule  = request.POST.get ('vehicule')
+            obj_loisir = request.POST.get ('objet_loisir')
+            obj_decoratif = request.POST.get('objet_decoratif')
+            response = Photo.objects.filter(objet__objet_naturel= obj_naturel,\
+                                    objet__objet_fabrique= obj_fabrique ,\
+                                    objet__objet_domestique = obj_domestique,\
+                                    objet__objet_travail = obj_travail ,\
+                                    objet__vehicule = vehicule , \
+                                    objet__objet_loisir= obj_loisir, \
+                                    objet__objet_decoratif = obj_decoratif)
+            context.update( {'response':response} )
+        context.update(csrf(request))
+    return render_to_response ('search_objet.html' , context )
+    
+

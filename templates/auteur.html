@@ -1,48 +1,62 @@
 {% extends "base.html" %}
-{% block title %}photographes{% endblock %}
+{% block title %}recherche trouve too{% endblock %}
 {% block page-id %}Add-invoice{% endblock %}
 {% block content %}
 
 <ul id="menu">
-<li>
+
+        <li>
                 <a href="{% url home %}">accueil</a>
-</li>
-        
+        </li>
+
         <li class="menu2">
-          <a href="{% url photographe %}">Photographes</a>
+            <a href="{% url photographe %}">Photographes</a>
+            
                 <ul>
-      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                    
+                    <li><a href="{% url ajoutautor %}">Ajout de photographe</a></li>
+            
                 </ul>
         </li>
         
         <li>
-                <a href="{% url galerie %}">photos</a>
-<ul>
+            
+            <a href="{% url galerie %}">photos</a>
+                
+                <ul>
                         <li>
                                 <a href="{% url ajout_lieux %}">ajouter une photo</a>
                         </li>
+                        
                         <li>
                             <a href="{% url info_photo %}">Modifier une photo</a>
                         </li>
-          </ul>
+
+                </ul>
+        </li>
+    
+        <li>
+            <a href = "{% url recherche %}">recherche</a>
         </li>
 
 </ul>
   
             <h1>Recherche d'un photographe</h1>
 
-          <form action="{% url auteur %}" method="GET">
-                <label for="q">Mots clé: </label>
+          <form action="{% url recherche %}" method="GET">
+                <label for="q">Trouve too: </label>
                 <input type="text" name="q" value="{{ query|escape }}">
                 <input type="submit" value="Recherche">
           </form>
         {% if query %}
             <h2>Resultat de la recherche "{{ query|escape }}":</h2>
                 {% if resultat %}
-                  <ul>
+                
+                  <ul class "span-23 prepend-2">
                   {% for photo in resultat %}
-                        <li><img src ='/static/{{photo.thumbnail}}'></li>
-                        
+                        <li><img src ='/static/{{ photo.photo.thumbnail }}'height="200" width="200"></li>
+                        <a href= "{% url dashphoto photo.id %}"><img src="/static/css/images/button_plus.gif"></a>
+                        <a href ="{% url modif_photo photo.id %} "><img id = 'image' src="/static/css/images/Pencil3.png" width="" height="50" title="{% for error in field.errors %}{{ error }}{% endfor %}" /></a>
                   {% endfor %}
                   </ul>
                 {% else %}

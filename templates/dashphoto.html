@@ -4,28 +4,39 @@
 {% block content %}
 
 <ul id="menu">
-<li>
-                <a href="{% url home %}">accueil</a>
-</li>
-        
-        <li class="menu2">
-          <a href="{% url photographe %}">Photographes</a>
-                <ul>
-      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
-                </ul>
-        </li>
 
         <li>
-                <a href="{% url galerie %}">photos</a>
-        <ul>
+                <a href="{% url home %}">accueil</a>
+        </li>
+
+        <li class="menu2">
+            <a href="{% url photographe %}">Photographes</a>
+            
+                <ul>
+                    
+                    <li><a href="{% url ajoutautor %}">Ajout de photographe</a></li>
+            
+                </ul>
+        </li>
+        
+        <li>
+            
+            <a href="{% url galerie %}">photos</a>
+                
+                <ul>
                         <li>
                                 <a href="{% url ajout_lieux %}">ajouter une photo</a>
                         </li>
+                        
                         <li>
                             <a href="{% url info_photo %}">Modifier une photo</a>
                         </li>
 
-          </ul>
+                </ul>
+        </li>
+    
+        <li>
+            <a href = "{% url recherche %}">recherche</a>
         </li>
 
 </ul>
@@ -78,17 +89,32 @@
                                 <td>Action</td>
                                 <td>{{photo.action}}</td>
                             </tr>
+                            
                             <tr>
                                 <td>Habillement</td>
-                                <td>{{photo.habillement}}</td>
+                                
+                                <td>{% for habillement in index_habit %}
+                                    {{habillement}} -
+                                    {% endfor %}
+                                </td>
                             </tr>
+                            
                             <tr>
                                 <td>Objet</td>
-                                <td>{{photo.objet}}</td>
+                                
+                                <td>{% for objet in index_obj %}
+                                    {{objet}} -
+                                    {% endfor %}
+                                </td>
                             </tr>
+                            
                             <tr>
                                 <td>Personne</td>
-                                <td>{{photo.personne}}</td>
+                                
+                                <td>{% for personne in index_pers %}
+                                        {{personne}} -
+                                    {% endfor %}
+                                </td>
                             </tr>
                             
                     </table>

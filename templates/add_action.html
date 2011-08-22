@@ -4,28 +4,39 @@
 {% block content %}
 
 <ul id="menu">
-<li>
+
+        <li>
                 <a href="{% url home %}">accueil</a>
-</li>
-        
+        </li>
+
         <li class="menu2">
-          <a href="{% url photographe %}">Photographes</a>
+            <a href="{% url photographe %}">Photographes</a>
+            
                 <ul>
-      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                    
+                    <li><a href="{% url ajoutautor %}">Ajout de photographe</a></li>
+            
                 </ul>
         </li>
         
         <li>
-                <a href="{% url galerie %}">photos</a>
-<ul>
+            
+            <a href="{% url galerie %}">photos</a>
+                
+                <ul>
                         <li>
                                 <a href="{% url ajout_lieux %}">ajouter une photo</a>
                         </li>
-                                                <li>
+                        
+                        <li>
                             <a href="{% url info_photo %}">Modifier une photo</a>
                         </li>
 
-          </ul>
+                </ul>
+        </li>
+    
+        <li>
+            <a href = "{% url recherche %}">recherche</a>
         </li>
 
 </ul>
@@ -53,29 +64,7 @@
             
     </form>
     </fieldset>
-<!--
-    <script type="text/javascript"> 
- 
-$(document).ready(function() 
-{ 
+    
+    
 
-  //toggle the componenet with class msg_body 
-  $("#id_action_personnage_0").click(function() 
-  { 
-  $("#id_type_pose_1").parent().hide(); 
-  				$("#id_type_pose_0").parent().show();
-  }); 
-		$("#id_action_personnage_1").click(function() 
-			{ 	
-				$("#id_type_pose_0").parent().hide(); 
-						$("#id_type_pose_1").parent().show();
-			}); 
-		$("#m_a_0").click(function() 
-			{ 	
-				$("#id_type_pose_0").parent().show(); 
-						$("#id_type_pose_1").parent().show();
-			}); 
-}); 
-</script> 
--->
      {% endblock %}

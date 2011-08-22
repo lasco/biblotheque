@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Modification de photographe{% endblock %}
-{% block page-id %}add_autor{% endblock %}
+{% block title %}recherche action{% endblock %}
+{% block page-id %}ajout_lieux{% endblock %}
 {% block content %}
 
 <ul id="menu">
@@ -15,7 +15,7 @@
                 <ul>
                     
                     <li><a href="{% url ajoutautor %}">Ajout de photographe</a></li>
-            
+                
                 </ul>
         </li>
         
@@ -40,19 +40,38 @@
         </li>
 
 </ul>
-            <h1>Modification de photographe</h1>
-            
-        <form method = 'post' action =''>{% csrf_token %}
-                               
-                            <span class='prepend-4' id="">{{form.as_ul}}</span>
-                            
-        <p class='prepend-6'><input type='submit' value = "Modifier"/></p>
-        
-                <script type="text/javascript">
-        
-                    $('#id_date1').datepicker({ dateFormat: 'yy-mm-dd' });
-            
-                </script>
-    </form>
 
-{% endblock %}
+    <h1>recherche action</h1>
+    <p color='red'>{{error}}</p>
+    <fieldset>
+    <table>
+    <form  method="post">{% csrf_token %}
+    {% for field in form %}
+    
+        
+    <tr>
+        <td>{{ field.label_tag }}</td>
+        <td>{{ field }}</td>
+    </tr>
+            {% endfor %}
+    
+    </table>
+            <ul id = "add_i_p">
+                <li><input type="reset" value="Reset" id ="m_a_0"></li>
+                <li ><input type='submit' value = "rechercher"/></li>
+            </ul>
+            
+    </form>
+    </fieldset>
+                {% if response %}
+                    <ul>
+                    {% for photo in response %}
+                  
+                        <li><img src ='/static/{{ photo.photo.thumbnail }}'></li>
+                        
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                <p>pas de photo </p>
+     {% endblock %}

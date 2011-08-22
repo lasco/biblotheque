@@ -4,33 +4,42 @@
 {% block content %}
 
 <ul id="menu">
-<li>
+
+        <li>
                 <a href="{% url home %}">accueil</a>
-</li>
-        
+        </li>
+
         <li class="menu2">
-          <a href="{% url photographe %}">Photographes</a>
+            <a href="{% url photographe %}">Photographes</a>
+            
                 <ul>
-      <li>                          <a href="{% url ajoutautor %}">Ajout de photographe</a>                        </li>
+                    
+                    <li><a href="{% url ajoutautor %}">Ajout de photographe</a></li>
+            
                 </ul>
         </li>
         
         <li>
-                <a href="{% url galerie %}">photos</a>
-<ul>
+            
+            <a href="{% url galerie %}">photos</a>
+                
+                <ul>
                         <li>
                                 <a href="{% url ajout_lieux %}">ajouter une photo</a>
                         </li>
+                        
                         <li>
                             <a href="{% url info_photo %}">Modifier une photo</a>
                         </li>
 
-          </ul>
+                </ul>
+        </li>
+    
+        <li>
+            <a href = "{% url recherche %}">recherche</a>
         </li>
 
 </ul>
-
-</div>
 
 <h1 align="center">Accueil</h1> 
 <div class="yoxview">  

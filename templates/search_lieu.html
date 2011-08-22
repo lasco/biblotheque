@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Ajout de lieux{% endblock %}
+{% block title %}recherche lieu{% endblock %}
 {% block page-id %}ajout_lieux{% endblock %}
 {% block content %}
 
@@ -41,7 +41,7 @@
 
 </ul>
 
-    <h1>Lieu de la photo</h1>
+    <h1>Recherche Lieu</h1>
 
     <p color='red'>{{error}}</p>
     <fieldset>
@@ -59,12 +59,27 @@
         </table>
     <ul id = "add_i_p">
         <li><input type="reset" value="Reset" id="m_a_0"></li>
-        <li><input type='submit' value = "Suivant"/></li>
+        <li><input type='submit' value = "rechercher"/></li>
     </ul>
      </form>
     </fieldset>
+                {% if response %}
+                    <ul>
+                    {% for photo in response %}
+                  
+                        <li><img src ='/static/{{ photo.photo.thumbnail }}' height="200" width="200" ></li>
+                        <a href= "{% url dashphoto photo.id %}"><img src="/static/css/images/button_plus.gif"></a>
+                         <a href ="{% url modif_photo photo.id %} "><img id = 'image' src="/static/css/images/Pencil3.png" width="" height="50" title="{% for error in field.errors %}{{ error }}{% endfor %}" /></a>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                <p>pas de photo </p>
+
+    
 <script type="text/javascript"> 
- 
+
+
 $(document).ready(function() 
 { 
 
